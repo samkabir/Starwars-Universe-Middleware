@@ -45,7 +45,6 @@ app.get('/api/pagination/:resourceName', async (req, res) => {
   const { resourceName } = req.params;
   const page = req.query.page || 1;
   
-  // Validate resourceName (optional - you can add valid resource types)
   const validResources = ['films', 'people', 'planets', 'species', 'starships', 'vehicles'];
   if (!validResources.includes(resourceName)) {
     return res.status(400).json({ 
@@ -54,13 +53,12 @@ app.get('/api/pagination/:resourceName', async (req, res) => {
     });
   }
   
-  // Validate page number
   if (isNaN(page) || page < 1) {
     return res.status(400).json({ error: 'Invalid page number' });
   }
 
   try {
-    const response = await axios.get(`https://www.swapi.tech/api/${resourceName}?page=${page}&limit=10&expanded=true`);
+    const response = await axios.get(`https://www.swapi.tech/api/${resourceName}?page=${page}&limit=12&expanded=true`);
     res.json(response.data);
   } catch (error) {
     console.error(`${resourceName} fetch error:`, error.message);
